@@ -16,7 +16,7 @@ def etl_yelp_data(input_path='../data/raw/yelp_academic_dataset_review.json',
     - business_path (str): The path to the Yelp business data file. Default is '../data/raw/yelp_academic_dataset_business.json'.
     - output_path (str): The path to save the processed data file. Default is '../data/processed/yelp_ihop.csv'.
     '''
-    
+
     # lectura de datos
     df = pd.read_json(input_path, lines=True)
     business_data = pd.read_json(business_path, lines=True)
@@ -50,7 +50,7 @@ def sentiment_analysis(text):
     return TextBlob(text).sentiment.polarity
 
 
-def sentiment_analysis(input_path='../data/processed/yelp_ihop.csv', output_path='../data/processed/yelp_ihop_sentiment.csv'):
+def sentiment_extraction(input_path='../data/processed/yelp_ihop.csv', output_path='../data/processed/yelp_ihop_sentiment.csv'):
     '''
     This function receives the path of a Yelp data file and performs sentiment analysis on the text of the reviews.
 
@@ -63,6 +63,45 @@ def sentiment_analysis(input_path='../data/processed/yelp_ihop.csv', output_path
 
     # Apply sentiment analysis to the 'text' column
     data['sentiment'] = data['text'].apply(sentiment_analysis)
+
+    # Save the results back to a CSV file
+    data.to_csv(output_path, index=False)
+
+def extract_keywords(input_path='../data/processed/yelp_ihop_sentiment.csv', output_path='../data/final/yelp_ihop_reviews.csv'):
+    '''
+    This function receives the path of a Yelp data file and extracts keywords from the text of the reviews.
+
+    Parameters:
+    - input_path (str): The path to the input CSV file containing Yelp data. Default is '../data/processed/yelp_ihop_sentiment.csv'.
+    - output_path (str): The path to save the output CSV file with the extracted keywords. Default is '../data/final/yelp_ihop_reviews.csv'.
+    '''
+    # Load your CSV file
+    data = pd.read_csv(input_path)
+
+    # Extract nouns and adjectives
+    def extract_nouns_adjectives(text):
+        """
+        Extracts nouns and adjectives from the given text.
+
+        Args:
+            text (str): The input text.
+
+        Returns:
+            tuple: A tuple containing two strings. The first string contains the extracted nouns, 
+                   and the second string contains the extracted adjectives.
+        """
+        blob = TextBlob(text)
+        nouns = [word for word, tag in blob.tags if tag.startswith('NN')]  # Nouns
+        adjectives = [word for word, tag in blob.tags if tag.startswith('JJ')]  # Adjectives
+        return " ".join(nouns), " ".join(adjectives)
+
+    # Apply the function to each row of the 'text' column
+    data[['nouns', 'adjectives']] = data['text'].apply(
+        lambda x: pd.Series(extract_nouns_adjectives(x))
+    )
+
+    # Create a column with the keywords
+    data['keywords'] = data['nouns'] + ' ' + data['adjectives']
 
     # Save the results back to a CSV file
     data.to_csv(output_path, index=False)

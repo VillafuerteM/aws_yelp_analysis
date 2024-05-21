@@ -33,7 +33,7 @@ import os
 import argparse
 import pandas as pd
 from textblob import TextBlob
-from utils import etl_yelp_data, sentiment_analysis, extract_keywords  
+from utils import etl_yelp_data, sentiment_analysis, extract_keywords, sentiment_extraction
 
 # function to prepare Yelp data
 def prepare_yelp_data(review_file, business_file, output_file):
@@ -59,7 +59,7 @@ def prepare_yelp_data(review_file, business_file, output_file):
     etl_yelp_data(review_file, business_file, 'temp_yelp_data.csv')
 
     # Perform sentiment analysis
-    sentiment_analysis('temp_yelp_data.csv', 'temp_yelp_sentiment.csv')
+    sentiment_extraction('temp_yelp_data.csv', 'temp_yelp_sentiment.csv')
 
     # Extract keywords
     extract_keywords('temp_yelp_sentiment.csv', output_file)
