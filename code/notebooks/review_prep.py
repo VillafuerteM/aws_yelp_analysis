@@ -34,10 +34,6 @@ import argparse
 import pandas as pd
 from textblob import TextBlob
 from utils import etl_yelp_data, sentiment_analysis, extract_keywords, sentiment_extraction
-import logging
-
-# Configurar logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # function to prepare Yelp data
 def prepare_yelp_data(review_file, business_file, output_file):
@@ -59,32 +55,15 @@ def prepare_yelp_data(review_file, business_file, output_file):
     Returns:
     None
     """
-    
     # Perform ETL on Yelp data
-    logging.info("Performing ETL on Yelp data")
     etl_yelp_data(review_file, business_file, 'temp_yelp_data.csv')
-    
+
     # Perform sentiment analysis
-    logging.info("Performing sentiment analysis")
     sentiment_extraction('temp_yelp_data.csv', 'temp_yelp_sentiment.csv')
-    
+
     # Extract keywords
-    logging.info("Extracting keywords")
     extract_keywords('temp_yelp_sentiment.csv', output_file)
-    
+
     # Clean up temporary files
-    logging.info("Cleaning up temporary files")
     os.remove('temp_yelp_data.csv')
     os.remove('temp_yelp_sentiment.csv')
-    
-    logging.info("Data preparation complete")
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Prepare Yelp data for analysis.')
-    parser.add_argument('--review_file', type=str, required=True, help='Path to the Yelp review data file.')
-    parser.add_argument('--business_file', type=str, required=True, help='Path to the Yelp business data file.')
-    parser.add_argument('--output_file', type=str, required=True, help='Path to save the processed data.')
-    
-    args = parser.parse_args()
-    
-    prepare_yelp_data(args.review_file, args.business_file, args.output_file)
