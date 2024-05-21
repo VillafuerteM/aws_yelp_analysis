@@ -33,7 +33,7 @@ import os
 import argparse
 import pandas as pd
 from textblob import TextBlob
-from utils import etl_yelp_data, sentiment_analysis, extract_keywords, sentiment_extraction
+from utils import etl_yelp_data, sentiment_analysis, extract_keywords, sentiment_extraction, analyze_sentiment, extract_key_phrases
 import logging
 
 # Configurar logging
@@ -75,7 +75,14 @@ def prepare_yelp_data(review_file, business_file, output_file):
     # Clean up temporary files
     logging.info("Cleaning up temporary files")
     os.remove('temp_yelp_data.csv')
+
+    # Using AWS Comprehend
+    # Load the Yelp review data
+    logging.info("Extracting sentiment and key phrases using AWS Comprehend")
+    analyze_sentiment('temp_yelp_sentiment.csv', 'temp_yelp_sentiment_comprehend.csv')
+    extract_key_phrases('temp_yelp_sentiment_comprehend.csv', 'yelp_sentiment_comprehend.csv')
     os.remove('temp_yelp_sentiment.csv')
+    os.remove('temp_yelp_sentiment_comprehend.csv')
     
     logging.info("Data preparation complete")
 
