@@ -1,7 +1,7 @@
 import pandas as pd
 import boto3
 
-df = pd.read_csv('/Users/erwinminor/Downloads/yelp_ihop_reviews.csv')
+df = pd.read_csv('../../data/final/yelp_ihop_reviews.csv')
 
 comprehend = boto3.client('comprehend')
 
@@ -40,6 +40,7 @@ def extract_key_phrases(text):
 # Aplicar las funciones a las reseñas y obtener un DataFrame con los resultados
 df[['Sentiment', 'SentimentScore']] = df['text'].apply(lambda x: pd.Series(analyze_sentiment(x)))
 df['KeyPhrases'] = df['text'].apply(lambda x: extract_key_phrases(x))
+df['KeyPhrases'] = df['KeyPhrases'].apply(lambda x: str(x).replace('[','').replace(']','').replace(',','').replace("'",''))
 
 # Exportar df a csv
-df.to_csv('/Users/erwinminor/Desktop/yelp_ihop_reviews_sentiment_key.csv', index=False)
+df.to_csv('../../data/final/yelp_ihop_reviews_sentiment_key.csv', index=False)

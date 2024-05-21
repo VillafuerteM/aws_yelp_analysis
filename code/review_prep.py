@@ -77,7 +77,6 @@ def prepare_yelp_data(review_file, business_file, output_file):
     os.remove('temp_yelp_data.csv')
 
     # Using AWS Comprehend
-    # Load the Yelp review data
     logging.info("Extracting sentiment and key phrases using AWS Comprehend")
     analyze_sentiment('temp_yelp_sentiment.csv', 'temp_yelp_sentiment_comprehend.csv')
     extract_key_phrases('temp_yelp_sentiment_comprehend.csv', 'yelp_sentiment_comprehend.csv')

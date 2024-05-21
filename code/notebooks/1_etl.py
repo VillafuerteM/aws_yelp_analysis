@@ -25,8 +25,8 @@ import pandas as pd
 import json
 
 # lectura de datos
-df = pd.read_json('../data/raw/yelp_academic_dataset_review.json', lines=True)
-business_data = pd.read_json('../data/raw/yelp_academic_dataset_business.json', lines=True)
+df = pd.read_json('../../data/raw/yelp_academic_dataset_review.json', lines=True)
+business_data = pd.read_json('../../data/raw/yelp_academic_dataset_business.json', lines=True)
 
 # left join de los datos
 df = pd.merge(df, business_data, on='business_id', how='left')
@@ -40,5 +40,5 @@ df_ihop = df[(df['name'] == 'IHOP') &
              (df['state'].isin(['FL', 'PA', 'LA']))]
 
 # guardamos los datos limpios
-df_ihop.to_csv('../data/processed/yelp_ihop.csv', index=False)
+df_ihop.to_csv('../../data/processed/yelp_ihop.csv', index=False)
 

@@ -19,7 +19,7 @@ import pandas as pd
 from textblob import TextBlob
 
 # Cargar los datos
-data = pd.read_csv('../data/processed/yelp_ihop.csv')
+data = pd.read_csv('../../data/processed/yelp_ihop.csv')
 
 # Funcion para realizar análisis de sentimiento
 def sentiment_analysis(text):
@@ -29,7 +29,7 @@ def sentiment_analysis(text):
 data['sentiment'] = data['text'].apply(sentiment_analysis)
 
 # Guardamos los resultados en un archivo CSV
-data.to_csv('../data/processed/yelp_ihop_sentiment.csv', index=False)
+data.to_csv('../../data/processed/yelp_ihop_sentiment.csv', index=False)
 
 
 

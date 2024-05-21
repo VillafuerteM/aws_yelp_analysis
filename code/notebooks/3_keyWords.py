@@ -21,7 +21,7 @@ import pandas as pd
 from textblob import TextBlob
 
 # Cargamos los datos
-data = pd.read_csv('../data/processed/yelp_ihop_sentiment.csv')
+data = pd.read_csv('../../data/processed/yelp_ihop_sentiment.csv')
 
 # Extraemos sustantivos y adjetivos
 def extract_nouns_adjectives(text):
@@ -49,4 +49,4 @@ data[['nouns', 'adjectives']] = data['text'].apply(
 data['keywords'] = data['nouns'] + ' ' + data['adjectives']
 
 # Guardamos los resultados en un archivo CSV
-data.to_csv('../data/final/yelp_ihop_reviews.csv', index=False)
+data.to_csv('../../data/final/yelp_ihop_reviews.csv', index=False)
