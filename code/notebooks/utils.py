@@ -3,6 +3,9 @@ import pandas as pd
 import os
 import json
 from textblob import TextBlob
+import boto3
+
+comprehend = boto3.client('comprehend')
 
 # funcion para leer y limpiar los datos de Yelp
 def etl_yelp_data(input_path='../data/raw/yelp_academic_dataset_review.json', 
@@ -105,3 +108,36 @@ def extract_keywords(input_path='../data/processed/yelp_ihop_sentiment.csv', out
 
     # Save the results back to a CSV file
     data.to_csv(output_path, index=False)
+
+# Función para analizar el sentimiento de una reseña
+def analyze_sentiment(text):
+    """
+    Analyzes the sentiment of the given text using AWS Comprehend.
+
+    Parameters:
+    text (str): The text to be analyzed.
+
+    Returns:
+    tuple: A tuple containing the sentiment (str) and sentiment scores (dict).
+    """
+
+    response = comprehend.detect_sentiment(Text=text, LanguageCode='en')
+    sentiment = response['Sentiment']
+    sentiment_scores = response['SentimentScore']
+    return sentiment, sentiment_scores
+
+# Función para extraer frases clave de una reseña
+def extract_key_phrases(text):
+    """
+    Extracts key phrases from the given text using AWS Comprehend.
+
+    Args:
+        text (str): The text to extract key phrases from.
+
+    Returns:
+        list: A list of key phrases extracted from the text.
+    """
+    
+    response = comprehend.detect_key_phrases(Text=text, LanguageCode='en')
+    key_phrases = [phrase['Text'] for phrase in response['KeyPhrases']]
+    return key_phrases
