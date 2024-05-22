@@ -14,6 +14,7 @@
 - [Estructura del repositorio](#estructura-del-repositorio)
 - [Instalación del ambiente](#instalación-del-ambiente)
 - [Instrucciones de uso](#instrucciones-de-uso)
+- [Agradecimientos](#agredecimientos)
 
 ## Objetivo
 El objetivo de este proyecto es realizar un análisis de sentimiento de reseñas de Yelp con Amazon Comprehend. Una vez realizado el análisis, se hace una visualización de los resultados obtenidos mediante un dashboard en Amazon QuickSight.
@@ -147,6 +148,9 @@ MSCK REPAIR TABLE yelp_reviews.ihop_reviews;
 ```
 Finalmente, se pueden actualizar los datos en Amazon QuickSight.
 
+
+# Agredecimientos
+Queremos agradecer a Dante Ruiz. Sin él, no tendríamos que hacer este proyecto. Dante.. gracias por tanto y perdón por tan poco.
 
 
 
