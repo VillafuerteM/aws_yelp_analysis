@@ -1,5 +1,6 @@
-# agregamos la carpeta de data
-data/
+# agregamos todos los archivos json y csv
+*.json
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
