@@ -1,0 +1,2 @@
+# Carpeta de datos procesados
+En esta carpeta se almacenan temporalmente los datos procesados en el proyecto, en específico, los datos procesados filtrados por el restaurante deseado y por el periodo seleccionado. 
