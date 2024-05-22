@@ -34,6 +34,7 @@ Amazon Web Services (AWS):
 - Python
 
 ## Arquitectura
+![Arquitectura](images/Arquitectura.png)
 
 ## Estructura del repositorio
 ```
