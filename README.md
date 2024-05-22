@@ -151,7 +151,7 @@ Finalmente, se pueden actualizar los datos en Amazon QuickSight.
 
 
 # Agredecimientos
-Queremos agradecer a Dante Ruiz. Sin él, no tendríamos que hacer este proyecto. Dante.. gracias por tanto y perdón por tan poco.
+Queremos agradecer a Dante Ruiz. Sin él, no tendríamos que hacer este proyecto. Dante... gracias por tanto y perdón por tan poco.
 
 
 
