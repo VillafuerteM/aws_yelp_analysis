@@ -1,3 +1,12 @@
+# utils.py
+"""
+The objective of this script is to provide utility functions for the data preparation process. 
+The functions include ETL (Extract, Transform, Load) operations on Yelp data, sentiment analysis using TextBlob, 
+and keyword extraction from text data. The script also includes functions to perform sentiment analysis and 
+key phrase extraction using AWS Comprehend.
+"""
+
+# Import necessary libraries
 import pandas as pd
 import os
 import json
@@ -5,8 +14,10 @@ from textblob import TextBlob
 import logging
 import boto3
 
+# Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# ETL process for Yelp data
 def etl_yelp_data(input_path, business_path, output_path, chunk_size=10000):
     """
     Perform ETL on Yelp data, filtering for IHOP reviews in specific states from 2015 onwards.
@@ -57,6 +68,7 @@ def etl_yelp_data(input_path, business_path, output_path, chunk_size=10000):
         logging.error("Error in ETL process: %s", e)
         raise
 
+# Sentiment analysis using TextBlob
 def sentiment_analysis(text):
     """
     Perform sentiment analysis on the given text using TextBlob.
@@ -74,6 +86,7 @@ def sentiment_analysis(text):
         logging.error("Error in sentiment analysis: %s", e)
         raise
 
+# Sentiment extraction from Yelp reviews
 def sentiment_extraction(input_path, output_path):
     """
     Extract sentiment from Yelp reviews and save the results.
@@ -98,6 +111,7 @@ def sentiment_extraction(input_path, output_path):
         logging.error("Error in sentiment extraction: %s", e)
         raise
 
+# Keyword extraction from Yelp reviews
 def extract_keywords(input_path, output_path):
     """
     Extract keywords (nouns and adjectives) from Yelp reviews and save the results.
@@ -143,6 +157,7 @@ def extract_keywords(input_path, output_path):
         logging.error("Error in keyword extraction: %s", e)
         raise
 
+# Sentiment analysis using AWS Comprehend
 def analyze_sentiment(text):
     """
     Analyze sentiment of the given text using AWS Comprehend.
@@ -165,6 +180,7 @@ def analyze_sentiment(text):
         logging.error("Error in AWS Comprehend sentiment analysis: %s", e)
         raise
 
+# Key phrase extraction using AWS Comprehend
 def extract_key_phrases(text):
     """
     Extract key phrases from the given text using AWS Comprehend.
