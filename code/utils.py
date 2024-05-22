@@ -1,9 +1,9 @@
 # utils.py
 """
 The objective of this script is to provide utility functions for the data preparation process. 
-The functions include ETL (Extract, Transform, Load) operations on Yelp data, sentiment analysis using TextBlob, 
-and keyword extraction from text data. The script also includes functions to perform sentiment analysis and 
-key phrase extraction using AWS Comprehend.
+The functions include ETL (Extract, Transform, Load) operations on Yelp data, sentiment analysis
+using TextBlob, and keyword extraction from text data. The script also includes functions to
+perform sentiment analysis and key phrase extraction using AWS Comprehend.
 """
 
 # Import necessary libraries
@@ -49,11 +49,12 @@ def etl_yelp_data(input_path, business_path, output_path, chunk_size=10000):
                 chunk['text'] = chunk['text'].str.replace('\n', '. ').str.replace('\r', '')
 
                 # Format date column
-                chunk.loc[:, 'date'] = pd.to_datetime(chunk['date'], format='%m/%d/%Y %I:%M:%S %p').dt.strftime('%Y-%m-%d')
+                chunk.loc[:, 'date'] = pd.to_datetime(chunk['date'],
+                    format='%m/%d/%Y %I:%M:%S %p').dt.strftime('%Y-%m-%d')
 
                 # Filter IHOP data
-                chunk_ihop = chunk[(chunk['name'] == 'IHOP') & 
-                                   (chunk['date'].dt.year >= 2015) & 
+                chunk_ihop = chunk[(chunk['name'] == 'IHOP') &
+                                   (chunk['date'].dt.year >= 2015) &
                                    (chunk['state'].isin(['FL', 'PA', 'LA']))]
 
                 # Append to the main DataFrame
@@ -135,8 +136,9 @@ def extract_keywords(input_path, output_path):
                 text (str): The input text.
             
             Returns:
-                tuple: A tuple containing two strings. The first string contains the extracted nouns, 
-                       and the second string contains the extracted adjectives.
+                tuple: A tuple containing two strings. The first string contains the
+                        extracted nouns, and the second string contains the extracted 
+                        adjectives.
             """
             try:
                 blob = TextBlob(text)

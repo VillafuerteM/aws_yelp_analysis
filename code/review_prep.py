@@ -1,15 +1,19 @@
 # review_prep.py
 """
-The objective of this script is to prepare the Yelp data for analysis by performing the following steps:
+The objective of this script is to prepare the Yelp data for analysis by performing the following
+steps:
 1. Load the Yelp review data.
 2. Load the Yelp business data.
 3. Merge the review and business data.
-4. Filter the data to include only reviews for IHOP locations in Florida, Pennsylvania, and Louisiana from 2015 onwards.
+4. Filter the data to include only reviews for IHOP locations in Florida, Pennsylvania, and
+Louisiana from 2015 onwards.
 5. Perform sentiment analysis on the reviews.
 6. Extract keywords from the reviews.
 7. Save the processed data to a CSV file.
 
-The script is divided into several functions to perform each step of the data preparation process. The main function, `prepare_yelp_data`, orchestrates the execution of these functions in the correct order.
+The script is divided into several functions to perform each step of the data preparation process.
+The main function, `prepare_yelp_data`, orchestrates the execution of these functions in the
+correct order.
 
 Inputs:
 - Yelp review data file (JSON format)
@@ -51,7 +55,7 @@ def prepare_yelp_data(review_file, business_file, output_file):
     """
     try:
         logging.info("Starting data preparation")
-        
+
         # Perform ETL on Yelp data
         try:
             logging.info("Performing ETL on Yelp data")
@@ -59,7 +63,7 @@ def prepare_yelp_data(review_file, business_file, output_file):
         except Exception as e:
             logging.error("Error during ETL process: %s", e)
             raise
-        
+
         # Perform sentiment analysis
         try:
             logging.info("Performing sentiment analysis using AWS Comprehend")
@@ -68,12 +72,13 @@ def prepare_yelp_data(review_file, business_file, output_file):
         except Exception as e:
             logging.error("Error during sentiment analysis: %s", e)
             raise
-        
+
         # Extract keywords
         try:
             logging.info("Extracting key phrases using AWS Comprehend")
             df['KeyPhrases'] = df['text'].apply(lambda x: extract_key_phrases(x))
-            df['KeyPhrases'] = df['KeyPhrases'].apply(lambda x: str(x).replace('[','').replace(']','').replace(',','').replace("'",''))
+            df['KeyPhrases'] = df['KeyPhrases'].apply(lambda x: str(x).
+                replace('[','').replace(']','').replace(',','').replace("'",''))
         except Exception as e:
             logging.error("Error during keyword extraction: %s", e)
             raise
@@ -85,7 +90,7 @@ def prepare_yelp_data(review_file, business_file, output_file):
         except Exception as e:
             logging.error("Error saving the processed data: %s", e)
             raise
-        
+
         # Clean up temporary files
         try:
             logging.info("Cleaning up temporary files")
@@ -93,7 +98,7 @@ def prepare_yelp_data(review_file, business_file, output_file):
         except Exception as e:
             logging.error("Error cleaning up temporary files: %s", e)
             raise
-        
+
         logging.info("Data preparation complete")
 
     except Exception as e:
@@ -102,11 +107,19 @@ def prepare_yelp_data(review_file, business_file, output_file):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Prepare Yelp data for analysis.')
-    parser.add_argument('--review_file', type=str, required=True, help='Path to the Yelp review data file.')
-    parser.add_argument('--business_file', type=str, required=True, help='Path to the Yelp business data file.')
-    parser.add_argument('--output_file', type=str, required=True, help='Path to save the processed data.')
-    
-    args = parser.parse_args()
-    
-    prepare_yelp_data(args.review_file, args.business_file, args.output_file)
+    parser.add_argument('--review_file',
+        type=str,
+        required=True,
+        help='Path to the Yelp review data file.')
+    parser.add_argument('--business_file',
+        type=str,
+        required=True,
+        help='Path to the Yelp business data file.')
+    parser.add_argument('--output_file',
+        type=str,
+        required=True,
+        help='Path to save the processed data.')
 
+    args = parser.parse_args()
+
+    prepare_yelp_data(args.review_file, args.business_file, args.output_file)
