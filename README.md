@@ -84,7 +84,7 @@ Para correr el código, se debe seguir los siguientes pasos:
 3. Crear las carpetas de processed y final en la carpeta data.
 4. Correr el script review_prep.py con el siguiente comando modificando los paths correspondientes:
 ```bash
-python review_prep.py --review_file <path_to_review_file> --business_file <path_to_business_file> --output_file <output_file_path>
+python review_prep.py --review_file <path_to_review_file> --business_file <path_to_business_file> --output_file <output_file_path> --s3_bucket <s3_bucket_name> --s3_prefix <s3_prefix>
 ```
 5. Cargar los datos a Amazon S3
     - Se pueden subir a mano los datos o con el siguiente comando

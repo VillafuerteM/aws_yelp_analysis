@@ -203,3 +203,27 @@ def extract_key_phrases(text):
     except Exception as e:
         logging.error("Error in AWS Comprehend key phrase extraction: %s", e)
         raise
+
+def upload_to_s3(file_path, bucket_name, s3_object_name=None):
+    """
+    Upload a file to an S3 bucket
+
+    Parameters:
+    file_path (str): Path to the file to upload
+    bucket_name (str): Name of the S3 bucket
+    s3_object_name (str): S3 object name. If not specified, file_path is used
+
+    Returns:
+    bool: True if file was uploaded, else False
+    """
+    if s3_object_name is None:
+        s3_object_name = os.path.basename(file_path)
+
+    s3_client = boto3.client('s3')
+    try:
+        s3_client.upload_file(file_path, bucket_name, s3_object_name)
+        logging.info(f"File {file_path} uploaded to {bucket_name}/{s3_object_name}")
+        return True
+    except Exception as e:
+        logging.error(f"Error uploading file to S3: {e}")
+        return False

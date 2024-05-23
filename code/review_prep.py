@@ -90,6 +90,15 @@ def prepare_yelp_data(review_file, business_file, output_file):
         except Exception as e:
             logging.error("Error saving the processed data: %s", e)
             raise
+        
+        # Upload the results to S3
+        try:
+            logging.info(f"Uploading {output_file} to S3 bucket {s3_bucket}")
+            s3_object_name = os.path.join(s3_prefix, os.path.basename(output_file))
+            upload_to_s3(output_file, s3_bucket, s3_object_name)
+        except Exception as e:
+            logging.error(f"Error uploading the processed data to S3: {e}")
+            raise
 
         # Clean up temporary files
         try:
